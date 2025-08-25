@@ -50,6 +50,7 @@ const ChatSupport: React.FC = () => {
       };
       setMessages(prev => [...prev, botResponse]);
     }, 1000);
+  
   };
 
   return (

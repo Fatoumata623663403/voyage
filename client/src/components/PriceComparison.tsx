@@ -133,6 +133,17 @@ const PriceComparison: React.FC<PriceComparisonProps> = ({
           </div>
         </div>
       </div>
+
+            <div className="flex items-start">
+        <Target className="w-4 h-4 text-green-600 mr-2 mt-0.5" />  {/* <-- Utilisation de Target ici */}
+        <div>
+          <p className="text-sm font-medium text-green-800 mb-1">Meilleur moment pour réserver</p>
+          <p className="text-sm text-green-700">
+            Généralement 6-8 semaines avant le départ pour cette destination
+          </p>
+        </div>
+      </div>
+
     </div>
   );
 };

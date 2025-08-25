@@ -1,12 +1,43 @@
 import React from 'react';
-import { MapPin, ArrowRight, Star, TrendingUp, Plane, Calendar, Users, Award } from 'lucide-react';
+import { MapPin, ArrowRight, Star, TrendingUp, Plane, Calendar, Users, Award,  } from 'lucide-react';
 import { popularDestinations } from '../utils/mockData';
+import { destinationCategories } from "../shared/countries";
+
+
 
 interface DestinationGalleryProps {
   onDestinationSelect: (destination: string) => void;
 }
 
 const DestinationGallery: React.FC<DestinationGalleryProps> = ({ onDestinationSelect }) => {
+ const categories = [
+    {
+      name: "Europe",
+      destinations: destinationCategories.europe.slice(0, 6),
+      gradient: "from-blue-500 to-purple-600",
+      icon: "🇪🇺",
+    },
+    {
+      name: "Asie",
+      destinations: destinationCategories.asie.slice(0, 6),
+      gradient: "from-red-500 to-pink-600",
+      icon: "🏯",
+    },
+    {
+      name: "Amériques",
+      destinations: destinationCategories.ameriques.slice(0, 6),
+      gradient: "from-green-500 to-blue-600",
+      icon: "🗽",
+    },
+    {
+      name: "Afrique",
+      destinations: destinationCategories.afrique.slice(0, 6),
+      gradient: "from-orange-500 to-yellow-600",
+      icon: "🦁",
+    },
+
+  ];
+  
   const featuredDeals = [
     { 
       destination: 'Bali', 
@@ -15,7 +46,7 @@ const DestinationGallery: React.FC<DestinationGalleryProps> = ({ onDestinationSe
       originalPrice: '€690',
       flag: '🇮🇩',
       description: 'Temples mystiques et plages paradisiaques',
-      validUntil: '15 Mars'
+      validUntil: '15 Octombre'
     },
     { 
       destination: 'Tokyo', 
@@ -24,7 +55,7 @@ const DestinationGallery: React.FC<DestinationGalleryProps> = ({ onDestinationSe
       originalPrice: '€780',
       flag: '🇯🇵',
       description: 'Tradition et modernité en harmonie',
-      validUntil: '20 Mars'
+      validUntil: '20 Novembre'
     },
     { 
       destination: 'New York', 
@@ -33,7 +64,7 @@ const DestinationGallery: React.FC<DestinationGalleryProps> = ({ onDestinationSe
       originalPrice: '€520',
       flag: '🇺🇸',
       description: 'La ville qui ne dort jamais',
-      validUntil: '25 Mars'
+      validUntil: '25 Decembre'
     }
   ];
 
@@ -200,7 +231,106 @@ const DestinationGallery: React.FC<DestinationGalleryProps> = ({ onDestinationSe
           </button>
         </div>
       </div>
+
+       <div className="py-20 bg-gradient-to-b from-gray-50 to-white">
+      
+
+
+       
+
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="text-center mb-12">
+          <h2 className="text-3xl font-bold text-gray-900 mb-4">
+            Destinations populaires par région
+          </h2>
+          <p className="text-lg text-gray-600">
+            Découvrez nos destinations les plus prisées dans le monde entier
+          </p>
+        </div>
+
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+          {categories.map((category) => (
+            <div key={category.name} className="overflow-hidden">
+              <div
+                className={`h-32 bg-gradient-to-r ${category.gradient} flex items-center justify-center`}
+              >
+                <div className="text-center text-white">
+                  <div className="text-4xl mb-2">{category.icon}</div>
+                  <h3 className="text-2xl font-bold">{category.name}</h3>
+                </div>
+              </div>
+              <div className="p-6">
+                <div className="grid grid-cols-2 gap-3">
+                  {category.destinations.map((destination) => {
+                    const [city, country] = destination.split(", ");
+                    return (
+                      <button
+                        key={destination}
+                        onClick={() => onDestinationSelect?.(destination)}
+                        className="text-left p-3 rounded-lg hover:bg-gray-50 transition-colors group"
+                      >
+                        <div className="flex items-center space-x-2">
+                          <MapPin className="w-4 h-4 text-gray-400 group-hover:text-primary transition-colors" />
+                          <div>
+                            <div className="font-medium text-gray-900">
+                              {city}
+                            </div>
+                            <div className="text-sm text-gray-500">
+                              {country}
+                            </div>
+                          </div>
+                        </div>
+                      </button>
+                    );
+                  })}
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        {/* Quick examples */}
+        <div className="mt-12 text-center">
+          <h3 className="text-lg font-semibold text-gray-900 mb-4">
+            Exemples de recherches populaires
+          </h3>
+          <div className="flex flex-wrap justify-center gap-3">
+            {[
+              "Paris → Tokyo",
+              "Londres → New York",
+              "Madrid → Bangkok",
+              "Rome → Sydney",
+              "Berlin → Marrakech",
+              "Amsterdam → Bali",
+              "Paris → Dakar",
+              "Londres → Le Cap",
+              "Madrid → Tunis",
+              "Milan → Nairobi",
+              "Bruxelles → Casablanca",
+              "Genève → Zanzibar",
+            ].map((route) => (
+              <div
+                key={route}
+                
+                className="px-4 py-2 text-sm hover:bg-primary hover:text-white cursor-pointer transition-colors"
+                onClick={() => {
+                  const [departure, destination] = route.split(" → ");
+                  onDestinationSelect?.(departure);
+                  // Could also set destination automatically
+                }}
+              >
+                <Plane className="w-3 h-3 mr-2" />
+                {route}
+              </div>
+            ))}
+          </div>
+        </div>
+        
+      </div>
     </div>
+    
+      </div>
+    
   );
 };
 

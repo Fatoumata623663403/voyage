@@ -196,20 +196,22 @@ export interface SearchFilters {
 export interface Booking {
 
 
-   _id: string; // Ajouté pour corriger l'erreur
-  userId: string;
+  id: string; // Ajouté pour corriger l'erreur
+  userId?: string;
   type: 'flight' | 'hotel' | 'car' | 'activity' | 'package';
   status: 'confirmed' | 'pending' | 'cancelled' | 'completed';
   bookingDate: string;
   travelDate: string;
   details: Flight | Hotel | CarRental | Activity | Package;
-  passengers:string[]| Passenger[];
+  passengers:Passenger[];
   guests?: number;
   totalPrice: number;
   currency: string;
   paymentMethod: string;
   confirmationNumber: string;
   specialRequests?: string;
+    destination: string;
+     date: string;   
 }
 
 export interface Passenger {
@@ -227,7 +229,7 @@ export interface Passenger {
 }
 
 export interface User {
-  id: string;
+  _id: string;
   name: string;
   email: string;
   phone: string;
@@ -240,6 +242,7 @@ export interface User {
     country: string;
     postalCode: string;
   };
+  
   preferences: {
     currency: string;
     language: string;
@@ -259,11 +262,13 @@ export interface User {
   loyaltyPoints: number;
   membershipLevel: 'bronze' | 'silver' | 'gold' | 'platinum';
   paymentMethods: PaymentMethod[];
+  
 }
+
 
 export interface PaymentMethod {
   id: string;
-  type: 'card' | 'paypal' | 'apple_pay' | 'google_pay';
+  type: 'card' | 'paypal' | 'apple_pay' | 'google_pay' | 'OrangeMoney';
   cardNumber?: string;
   cardType?: string;
   expiryDate?: string;

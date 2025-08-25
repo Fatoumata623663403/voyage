@@ -3,17 +3,17 @@ import { Play, Star, Users, Award, Globe, TrendingUp, Shield, Heart } from 'luci
 
 const HeroSection: React.FC = () => {
   return (
-    <div className="relative min-h-screen flex items-center justify-center overflow-hidden">
+    <div className="relative min-h-screen flex items-center justify-center overflow-hidden ">
       {/* Background avec effet parallax */}
       <div className="absolute inset-0">
-        <div className="absolute inset-0 bg-gradient-to-r from-blue-900/90 via-purple-900/80 to-indigo-900/90 z-10"></div>
+        <div className="absolute inset-0 bg-gradient-to-r from-blue-900/50 via-purple-900/60 to-indigo-900/50 z-10"></div>
         <img
           src="https://images.pexels.com/photos/1008155/pexels-photo-1008155.jpeg?auto=compress&cs=tinysrgb&w=1920"
           alt="Voyage de rêve"
           className="w-full h-full object-cover"
         />
         {/* Overlay animé */}
-        <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent z-5"></div>
+        <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent z-6"></div>
       </div>
 
       {/* Éléments flottants animés */}
@@ -33,16 +33,16 @@ const HeroSection: React.FC = () => {
       </div>
 
       {/* Contenu principal */}
-      <div className="relative z-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+      <div className="relative z-30 max-w-9xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
         {/* Badge de confiance */}
-        <div className="inline-flex items-center bg-white/10 backdrop-blur-sm border border-white/20 rounded-full px-6 py-2 mb-8">
+        <div className="inline-flex items-center bg-white/10 backdrop-blur-sm border border-white/2 rounded-full px-6 py-2 mb-8">
           <Shield className="w-4 h-4 text-green-400 mr-2" />
           <span className="text-white text-sm font-medium">Plateforme certifiée et sécurisée</span>
         </div>
 
         {/* Titre principal */}
         <div className="mb-8">
-          <h1 className="text-5xl md:text-7xl font-bold text-white mb-6 leading-tight">
+          <h1 className="text-5xl md:text-8xl font-bold text-white mb-6 leading-tight">
             Voyagez avec
             <span className="block bg-gradient-to-r from-yellow-400 via-orange-500 to-red-500 bg-clip-text text-transparent animate-pulse">
               Easy-Trip

@@ -1,5 +1,13 @@
 import React, { useState } from 'react';
 import { Menu, X, User, Heart, Calendar, Search, Bell, Gift, Car, Camera, Package, Globe, CreditCard, HelpCircle, Settings, LogOut, Plane, Building } from 'lucide-react';
+import { Link, Navigate } from "react-router-dom";
+import Register from '../pages/Register';
+import Login from '../pages/Login';
+
+
+
+
+
 
 interface HeaderProps {
   onMenuToggle: () => void;
@@ -7,36 +15,47 @@ interface HeaderProps {
   setActiveSection: (section: string) => void;
 }
 
+
+
 const Header: React.FC<HeaderProps> = ({ onMenuToggle, activeSection, setActiveSection }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [showUserMenu, setShowUserMenu] = useState(false);
   const [notifications] = useState(3);
+
+
+
 
   const handleMenuToggle = () => {
     setIsMenuOpen(!isMenuOpen);
     onMenuToggle();
   };
 
+  
+
+
   const navItems = [
     { id: 'home', label: 'Accueil', icon: Search, color: 'text-blue-600' },
-    { id: 'flights', label: 'Vols', icon: Plane, color: 'text-sky-600' },
-    { id: 'hotels', label: 'Hôtels', icon: Building, color: 'text-green-600' },
+    { id: 'Vols', label: 'Vols', icon: Plane, color: 'text-sky-600' },
+    { id: 'Hôtels', label: 'Hôtels', icon: Building, color: 'text-green-600' },
     { id: 'cars', label: 'Voitures', icon: Car, color: 'text-purple-600' },
     { id: 'activities', label: 'Activités', icon: Camera, color: 'text-orange-600' },
     { id: 'packages', label: 'Séjours', icon: Package, color: 'text-red-600' },
     { id: 'deals', label: 'Promotions', icon: Gift, color: 'text-pink-600' },
+    
   ];
 
   const userMenuItems = [
     { id: 'profile', label: 'Mon Profil', icon: User },
     { id: 'bookings', label: 'Mes Réservations', icon: Calendar },
     { id: 'favorites', label: 'Mes Favoris', icon: Heart },
-    { id: 'payments', label: 'Paiements', icon: CreditCard },
+    { id: 'payment', label: 'Paiements', icon: CreditCard },
     { id: 'settings', label: 'Paramètres', icon: Settings },
-    { id: 'help', label: 'Aide & Support', icon: HelpCircle },
+    { id: 'chatSupports', label: 'Aide & Support', icon: HelpCircle },
   ];
 
   return (
+
+    
     <header className="bg-white shadow-lg sticky top-0 z-50 border-b border-gray-100">
       <div className="max-w-70xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
@@ -78,6 +97,8 @@ const Header: React.FC<HeaderProps> = ({ onMenuToggle, activeSection, setActiveS
 
           {/* Actions utilisateur */}
           <div className="hidden md:flex items-center space-x-3">
+     
+
             {/* Notifications */}
             <button
               onClick={() => setActiveSection('notifications')}
@@ -117,6 +138,9 @@ const Header: React.FC<HeaderProps> = ({ onMenuToggle, activeSection, setActiveS
               Réservations
             </button>
             
+
+            
+
             {/* Menu utilisateur */}
             <div className="relative">
               <button
@@ -126,9 +150,13 @@ const Header: React.FC<HeaderProps> = ({ onMenuToggle, activeSection, setActiveS
                 <div className="w-8 h-8 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full flex items-center justify-center mr-2">
                   <User className="w-4 h-4 text-white" />
                 </div>
-                <span>Mon compte</span>
+                <span
+                
+                >Mon compte</span>
               </button>
-              
+
+
+                
               {/* Dropdown menu */}
               {showUserMenu && (
                 <div className="absolute right-0 mt-3 w-62 bg-white rounded-xl shadow-xl border border-gray-200 py-2 z-50">
@@ -144,29 +172,60 @@ const Header: React.FC<HeaderProps> = ({ onMenuToggle, activeSection, setActiveS
                   {userMenuItems.map((item) => {
                     const Icon = item.icon;
                     return (
-                      <button
-                        key={item.id}
-                        onClick={() => {
-                          setActiveSection(item.id);
-                          setShowUserMenu(false);
-                        }}
-                        className="flex items-center w-full px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 transition-colors"
-                      >
-                        <Icon className="w-4 h-4 mr-3 text-gray-400" />
-                        {item.label}
-                      </button>
-                    );
-                  })}
-                  
-                  <div className="border-t border-gray-100 mt-2 pt-2">
-                    <button className="flex items-center w-full px-4 py-2 text-sm text-red-600 hover:bg-red-50 transition-colors">
-                      <LogOut className="w-4 h-4 mr-3" />
-                      Se déconnecter
-                    </button>
-                  </div>
+                                <button
+                                  key={item.id}
+                                  onClick={() => {
+                                    setActiveSection(item.id);
+                                    setShowUserMenu(false);
+                                  }}
+                                  className="flex items-center w-full px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 transition-colors"
+                                >
+                                  <Icon className="w-4 h-4 mr-3 text-gray-400" />
+                                  {item.label}
+                                </button>
+                              );
+                            
+                           })}
+                              <div className="border-t border-gray-100 mt-2 pt-2">
+                                <button onClick={() => setActiveSection("home")}
+                                 className="flex items-center w-full px-4 py-2 text-sm text-red-600 hover:bg-red-50 transition-colors">
+                                  <LogOut className="w-4 h-4 mr-3" />
+                                  Se déconnecter
+                                </button>
+                              </div>
+
+
+                               {/* Boutons connexion / inscription */}
+                                    <button
+                              onClick={() => setActiveSection('login')}
+                              className="px-7 py-2 text-sm font-medium text-blue-600 border border-blue-600 rounded-xl hover:bg-blue-50 transition-all"
+                            >
+                              Se connecter
+                            </button>
+
+                            <button
+                              onClick={() => setActiveSection('register')}
+                              className="px-8 py-2 text-sm font-medium text-white bg-blue-600 rounded-xl hover:bg-blue-700 transition-all"
+                            >
+                              S’inscrire
+                            </button>
+
+                            <button onClick={() => setActiveSection("admin")}
+                              className="px-28 py-2 text-sm font-medium text-white bg-blue-400 rounded-xl hover:bg-blue-100 transition-all">
+                              Admin
+                            </button>
+
+
+                            <button onClick={() => setActiveSection("profile")}
+                              className="px-28 py-2 text-sm font-medium text-white bg-blue-400 rounded-xl hover:bg-blue-100 transition-all">
+                              user
+                            </button>
+
+
                 </div>
               )}
             </div>
+
           </div>
 
           {/* Bouton menu mobile */}
@@ -210,6 +269,7 @@ const Header: React.FC<HeaderProps> = ({ onMenuToggle, activeSection, setActiveS
               {/* Actions utilisateur mobile */}
               <div className="border-t border-gray-200 pt-3 mt-3">
                 <button
+                
                   onClick={() => {
                     setActiveSection('profile');
                     setIsMenuOpen(false);
@@ -237,10 +297,13 @@ const Header: React.FC<HeaderProps> = ({ onMenuToggle, activeSection, setActiveS
               </div>
             </div>
           </div>
+          
         )}
+        
       </div>
     </header>
   );
-};
+  };
+
 
 export default Header;

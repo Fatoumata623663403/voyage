@@ -25,10 +25,19 @@ import AuthModal from './components/AuthModal';
 import PaymentModal from './components/PaymentModal';
 import ChatSupport from './components/ChatSupport';
 import LoyaltyProgram from './components/LoyaltyProgram';
-import FlightSearchForm from './components/FlightSearchForm';
-
+import { useUser } from "./hooks/userUser";
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import Login from './pages/Login';
+import Register from './pages/Register';
+import Footer from "./components/Footer"; // chemin selon ton projet
+import AdminPage from "./pages/AdminPage"; // chemin selon ton projet
+import Dashboard from './components/user/Dashboard';
 
 function App() {
+   const { user } = useUser();
+  const userId = "12345";
+  
+
   const [activeSection, setActiveSection] = useState<string>('home');
   const [searchResults, setSearchResults] = useState<{
     type: 'flight' | 'hotel' | 'car' | 'activity' | 'package' | null;
@@ -52,7 +61,7 @@ function App() {
   // Local storage hooks
   const [bookings, setBookings] = useLocalStorage<Booking[]>('easyTripBookings', []);
   const [favorites, setFavorites] = useLocalStorage<string[]>('easyTripFavorites', []);
-  const [user, setUser] = useLocalStorage('easyTripUser', {
+  const [userData, setUser] = useLocalStorage('easyTripUser', {
     name: 'Fatoumata Diariou Bah',
     email: 'bahfatoumatadiariou461@gmail.com',
     phone: '+224 623 66 34 03',
@@ -76,12 +85,22 @@ function App() {
       id: '2',
       userName: 'Pierre M.',
       rating: 4,
-      date: '2024-02-28',
+      date: '2025-02-28',
+      title: 'Très bon rapport qualité-prix',
+      comment: 'Bien situé, personnel accueillant. Hôtel magnifique avec un service exceptionnel. Petit-déjeuner copieux.',
+      helpful: 8,
+      verified: true
+    },
+    {
+      id: '3',
+      userName: 'Fatima.',
+      rating: 4,
+      date: '2025-11-22',
       title: 'Très bon rapport qualité-prix',
       comment: 'Bien situé, personnel accueillant. Petit-déjeuner copieux. Juste un peu bruyant côté rue.',
       helpful: 8,
       verified: true
-    }
+    },
   ];
 
   const mockPriceData = {
@@ -138,6 +157,9 @@ function App() {
     setBookingModal({ isOpen: false, item: null, type: 'flight' });
   };
 
+   
+  
+
   function generateConfirmationNumber(length = 8): string {
   const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
   let result = '';
@@ -145,12 +167,26 @@ function App() {
     result += chars.charAt(Math.floor(Math.random() * chars.length));
   }
   return result;
-}
 
+  
+  }
+
+  console.log(React);
+  console.log(userData);
+  
+
+
+  if (user) {
+  console.log(user.id); // ✅ OK
+}
 
   const handlePaymentSuccess = () => {
     const newBooking: Booking = {
       id: Date.now().toString(),
+      userId: user?.id, // ou un ID fixe pour le test
+      passengers: [], // ou un tableau de passagers selon ton besoin
+ date: "2025-08-24", // correspond à la date de voyage
+  destination: "Paris", // ou la destination réelle
       type: bookingModal.type,
       status: 'confirmed',
       bookingDate: new Date().toISOString(),
@@ -192,14 +228,38 @@ function App() {
   const handleMenuToggle = () => {
     // Handle mobile menu toggle if needed
   };
+const handleFooterToggle = () => {
+  // Gérer les actions du Footer si nécessaire
+  console.log("Footer toggled");
+};
+  
 
   const renderContent = () => {
     switch (activeSection) {
+       case "login":
+        return <Login />;
+      case "register":
+        return <Register />;
+       
+        
+    case "admin":
+      return <AdminPage />; // ✅ Affiche l’interface Admin
+          
+       case "user":
+        return <Dashboard />
+      
       case 'home':
         return (
+
+          
           <div className="space-y-0">
             <HeroSection />
             
+            {/*<Dashboard userId={userId} />*/}
+
+      
+      
+
             <div className="relative -mt-32 z-20">
               <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div id="search-form">
@@ -211,7 +271,6 @@ function App() {
             <DestinationGallery onDestinationSelect={handleDestinationSelect} />
             <InspirationSection />
             <PromotionsSection />
-
             {/* Enhanced Features Section */}
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
               <div className="text-center mb-12">
@@ -267,21 +326,7 @@ function App() {
                   </p>
                   
                 </div>
-
-                
-                <div className="text-center  p- bg-white rounded-2xl shadow-lg hover:shadow-xl transition-shadow">
-                  <div className="w-96 h-7 bg-purple-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                    <svg className="w-8 h-8 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z" />
-                    </svg>
-                  </div>
-                  <h3 className="text-xl font-semibold text-gray-900 mb-2">
-                        Créer par Fatoumata Diariou Bah 2025
-                  </h3>
-                  
-                  
-                </div>
-                
+               
               </div>
             </div>
           </div>
@@ -297,7 +342,16 @@ function App() {
               >
                 ← Retour à la recherche
               </button>
+
               
+              {/* Affiche la destination choisie */}
+              {searchResults.destination && (
+                <div className="text-lg font-semibold text-gray-700 ml-4">
+                  Destination sélectionnée : {searchResults.destination}
+                </div>
+              )}
+
+
               {/* Enhanced toolbar */}
               <div className="flex items-center space-x-4">
                 {searchResults.type === 'hotel' && (
@@ -326,6 +380,8 @@ function App() {
                     >
                       Avis
                     </button>
+
+                    
                   </>
                 )}
               </div>
@@ -385,7 +441,7 @@ function App() {
                     competitors={mockPriceData.competitors}
                   />
                 )}
-                
+                 
                 {showReviews && (
                   <ReviewsSection
                     reviews={mockReviews}
@@ -395,6 +451,32 @@ function App() {
                 )}
               </div>
             </div>
+          </div>
+        );
+
+
+        case 'Vols':
+        return (
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+            <h2 className="text-2xl font-bold text-gray-900 mb-6">Location de vole</h2>
+            <FlightResults
+              onBookFlight={handleBookFlight}
+              onToggleFavorite={handleToggleFavorite}
+              favorites={favorites}
+            />
+          </div>
+        );
+
+
+        case 'Hôtels':
+        return (
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+            <h2 className="text-2xl font-bold text-gray-900 mb-6">Location d'Hôtels</h2>
+            <HotelResults
+              onBookHotel={handleBookHotel}
+              onToggleFavorite={handleToggleFavorite}
+              favorites={favorites}
+            />
           </div>
         );
 
@@ -444,7 +526,10 @@ function App() {
       case 'bookings':
         return (
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-            <BookingHistory bookings={bookings} />
+            {user && (
+           <BookingHistory userId={user.id} bookings={bookings} />
+          )}
+
           </div>
         );
 
@@ -467,9 +552,29 @@ function App() {
                 onUpdateUser={handleUpdateUser}
               />
               <LoyaltyProgram user={user} />
+              
             </div>
+            
           </div>
+
+          
         );
+
+        {/*case 'payment':
+            return (
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+                        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                              <PaymentModal
+                        isOpen={paymentModal.isOpen}
+                        onClose={() => setPaymentModal({ isOpen: false, amount: 0 })}
+                        amount={paymentModal.amount}
+                        onPaymentSuccess={handlePaymentSuccess}
+                      />
+                      </div>
+                      </div>
+            
+          
+          );*/}
 
       case 'notifications':
         setNotificationCenter(true);
@@ -482,49 +587,71 @@ function App() {
   };
 
   return (
+
+
+    
     <div className="min-h-screen bg-gray-50">
-      <Header
-        onMenuToggle={handleMenuToggle}
+      
+          <Header
+            onMenuToggle={handleMenuToggle}
+            activeSection={activeSection}
+            setActiveSection={setActiveSection}
+            
+          />
+      
+          <main>
+             {renderContent()}
+          </main>
+                                   
+    
+      <Footer
         activeSection={activeSection}
         setActiveSection={setActiveSection}
-      />
-      
-      <main>
-        {renderContent()}
-      </main>
-
-    <BookingModal
-  isOpen={bookingModal.isOpen}
-  onClose={() => setBookingModal({ isOpen: false, item: null, type: 'flight' })}
-  item={bookingModal.item}
-  type={bookingModal.type}
-  onConfirmBooking={handleConfirmBooking}
-  userId={user?.email}  // <-- ajoute cette ligne
-/>
-
-
-      <AuthModal
-        isOpen={authModal}
-        onClose={() => setAuthModal(false)}
-        onLogin={handleLogin}
-        onRegister={handleRegister}
+        onFooterToggle={handleFooterToggle}
       />
 
-      <PaymentModal
-        isOpen={paymentModal.isOpen}
-        onClose={() => setPaymentModal({ isOpen: false, amount: 0 })}
-        amount={paymentModal.amount}
-        onPaymentSuccess={handlePaymentSuccess}
-      />
 
-      <NotificationCenter
-        isOpen={notificationCenter}
-        onClose={() => setNotificationCenter(false)}
-      />
+          <BookingModal
+            isOpen={bookingModal.isOpen}
+            onClose={() => setBookingModal({ isOpen: false, item: null, type: 'flight' })}
+            item={bookingModal.item}
+            type={bookingModal.type}
+            onConfirmBooking={handleConfirmBooking}
+            userId={user?.email}  // <-- ajoute cette ligne
+          />
 
-      <ChatSupport />
+
+          <AuthModal
+            isOpen={authModal}
+            onClose={() => setAuthModal(false)}
+            onLogin={handleLogin}
+            onRegister={handleRegister}
+           />
+
+          <PaymentModal
+            isOpen={paymentModal.isOpen}
+            onClose={() => setPaymentModal({ isOpen: false, amount: 0 })}
+            amount={paymentModal.amount}
+            onPaymentSuccess={handlePaymentSuccess}
+            
+          />
+
+          <NotificationCenter
+            isOpen={notificationCenter}
+            onClose={() => setNotificationCenter(false)}
+          />
+
+
+          <ChatSupport />
+          
+
+
+
     </div>
+
+    
   );
+  
 }
 
 export default App;

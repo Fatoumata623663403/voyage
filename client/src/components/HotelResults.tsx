@@ -3,6 +3,7 @@ import { Hotel } from '../types';
 import { mockHotels } from '../utils/mockData';
 import { Star, MapPin, Heart, Wifi, Car, Coffee, Utensils, Waves, Dumbbell, Filter, Users, Calendar, Shield, Award, ChevronDown, ChevronUp, Zap, Crown, TrendingUp } from 'lucide-react';
 import MapView from "./MapView";
+import Header from './Header';
 
 interface HotelResultsProps {
   onBookHotel: (hotel: Hotel) => void;

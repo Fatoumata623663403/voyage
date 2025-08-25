@@ -3,6 +3,7 @@ import { Flight } from '../types';
 import { mockFlights } from '../utils/mockData';
 import { Plane, Clock, MapPin, Users, Heart, Filter, Wifi, Utensils, Monitor, ChevronDown, ChevronUp, Star, Shield, Zap, TrendingUp, Award, AlertTriangle, Leaf, Calendar, CreditCard } from 'lucide-react';
 
+
 interface FlightResultsProps {
   onBookFlight: (flight: Flight) => void;
   onToggleFavorite: (flightId: string) => void;
@@ -191,7 +192,7 @@ const FlightResults: React.FC<FlightResultsProps> = ({
                 <h2 className="text-2xl font-bold text-gray-900 mb-1">
                   {sortedFlights.length} vol{sortedFlights.length > 1 ? 's' : ''} trouvé{sortedFlights.length > 1 ? 's' : ''}
                 </h2>
-                <p className="text-gray-600">Paris → New York • 15 mars 2024</p>
+                <p className="text-gray-600">Paris → New York • 16 Septembre 2025</p>
               </div>
               
               <div className="flex items-center space-x-4 flex-wrap">

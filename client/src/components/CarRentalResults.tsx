@@ -169,8 +169,105 @@ const CarRentalResults: React.FC<CarRentalResultsProps> = ({
             </div>
           </div>
         ))}
+
+
+
+        
+      {/* Results */}
+      <div className="space-y-4">
+        {sortedCars.map((car) => (
+          <div key={car.id} className="bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow">
+            <div className="md:flex">
+              {/* Car Image */}
+              <div className="md:w-1/3">
+                <img
+                  src={car.image}
+                  alt={`${car.brand} ${car.model}`}
+                  className="w-full h-48 md:h-full object-cover rounded-l-lg"
+                />
+              </div>
+
+              {/* Car Details */}
+              <div className="md:w-2/3 p-6">
+                <div className="flex items-start justify-between mb-4">
+                  <div>
+                    <h3 className="text-xl font-bold text-gray-900 mb-1">
+                      {car.brand} {car.model}
+                    </h3>
+                    <p className="text-sm text-gray-600 mb-2">{car.category}</p>
+                    <div className="flex items-center text-gray-600 mb-2">
+                      <MapPin className="w-4 h-4 mr-1" />
+                      <span className="text-sm">{car.location}</span>
+                    </div>
+                  </div>
+                  <button
+                    onClick={() => onToggleFavorite(car.id)}
+                    className={`p-2 rounded-full transition-colors ${
+                      favorites.includes(car.id)
+                        ? 'bg-red-100 text-red-600'
+                        : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+                    }`}
+                  >
+                    <Heart className={`w-5 h-5 ${favorites.includes(car.id) ? 'fill-current' : ''}`} />
+                  </button>
+                </div>
+
+                {/* Car Specs */}
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-4">
+                  <div className="flex items-center">
+                    <Users className="w-4 h-4 text-gray-400 mr-2" />
+                    <span className="text-sm text-gray-600">{car.seats} places</span>
+                  </div>
+                  <div className="flex items-center">
+                    <Settings className="w-4 h-4 text-gray-400 mr-2" />
+                    <span className="text-sm text-gray-600">
+                      {car.transmission === 'automatic' ? 'Auto' : 'Manuelle'}
+                    </span>
+                  </div>
+                  <div className="flex items-center">
+                    <Fuel className="w-4 h-4 text-gray-400 mr-2" />
+                    <span className="text-sm text-gray-600">{car.fuel}</span>
+                  </div>
+                  <div className="flex items-center">
+                    <Car className="w-4 h-4 text-gray-400 mr-2" />
+                    <span className="text-sm text-gray-600">Climatisation</span>
+                  </div>
+                </div>
+
+                {/* Features */}
+                <div className="flex flex-wrap gap-2 mb-4">
+                  {car.features.map((feature, index) => (
+                    <span
+                      key={index}
+                      className="bg-blue-100 text-blue-800 px-2 py-1 rounded-full text-xs"
+                    >
+                      {feature}
+                    </span>
+                  ))}
+                </div>
+
+                <div className="flex items-center justify-between">
+                  <div>
+                    <p className="text-2xl font-bold text-gray-900">
+                      {formatPrice(car.price)}
+                    </p>
+                    <p className="text-sm text-gray-500">par jour</p>
+                  </div>
+                  <button
+                    onClick={() => onBookCar(car)}
+                    className="bg-blue-600 text-white px-6 py-3 rounded-lg font-medium hover:bg-blue-700 transition-colors"
+                  >
+                    Réserver
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        ))}
       </div>
     </div>
+      </div>
+    
   );
 };
 

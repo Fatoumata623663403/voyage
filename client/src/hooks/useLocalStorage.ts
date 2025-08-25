@@ -11,14 +11,20 @@ export function useLocalStorage<T>(key: string, initialValue: T) {
     }
   });
 
-  const setValue = (value: T | ((val: T) => T)) => {
+  // Effet pour synchroniser localStorage quand storedValue change
+  useEffect(() => {
     try {
-      const valueToStore = value instanceof Function ? value(storedValue) : value;
-      setStoredValue(valueToStore);
-      window.localStorage.setItem(key, JSON.stringify(valueToStore));
+      window.localStorage.setItem(key, JSON.stringify(storedValue));
     } catch (error) {
       console.error(`Error setting localStorage key "${key}":`, error);
     }
+  }, [key, storedValue]);
+
+  // setValue modifie seulement l'état React
+  const setValue = (value: T | ((val: T) => T)) => {
+    setStoredValue(prev => {
+      return value instanceof Function ? value(prev) : value;
+    });
   };
 
   return [storedValue, setValue] as const;

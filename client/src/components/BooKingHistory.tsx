@@ -21,7 +21,7 @@ const BookingHistory: React.FC<BookingHistoryProps> = ({ userId }) => {
   useEffect(() => {
     const fetchBookings = async () => {
       try {
-        const res = await fetch(`http://localhost:3000/api/bookings/user/${userId}`);
+        const res = await fetch(`http://localhost:000/api/bookings/user/${userId}`);
         const data = await res.json();
         setBookings(data);
       } catch (error) {
@@ -65,7 +65,7 @@ const BookingHistory: React.FC<BookingHistoryProps> = ({ userId }) => {
     }
   };
 
-  if (bookings.length === 0) {
+if (bookings.length === 0) {
     return (
       <div className="text-center py-12">
         <Calendar className="w-16 h-16 text-gray-400 mx-auto mb-4" />
@@ -73,7 +73,10 @@ const BookingHistory: React.FC<BookingHistoryProps> = ({ userId }) => {
         <p className="text-gray-500">
           Vos réservations apparaîtront ici une fois que vous aurez effectué vos premiers achats.
         </p>
+        
       </div>
+
+      
     );
   }
 
@@ -83,7 +86,7 @@ const BookingHistory: React.FC<BookingHistoryProps> = ({ userId }) => {
 
       <div className="space-y-4">
         {bookings.map((booking) => (
-          <div key={booking._id} className="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow">
+          <div key={booking.id} className="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow">
             <div className="flex items-start justify-between mb-4">
               <div className="flex items-center">
                 {booking.type === 'flight' ? (

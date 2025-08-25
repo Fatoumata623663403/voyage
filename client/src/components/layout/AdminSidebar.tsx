@@ -1,17 +1,16 @@
-import { Link } from "react-router-dom";
+import { Home, User, CreditCard, Box, MessageCircle } from 'lucide-react';
 
-export default function AdminSidebar() {
+export default function Sidebar() {
   return (
-    <div className="w-64 bg-gray-800 text-white h-full p-4">
-      <h2 className="text-xl font-bold mb-6">Admin Panel</h2>
-      <ul className="space-y-3">
-        <li><Link to="/admin">Dashboard</Link></li>
-        <li><Link to="/admin/trips">Voyages</Link></li>
-        <li><Link to="/admin/reservations">Réservations</Link></li>
-        <li><Link to="/admin/payments">Paiements</Link></li>
-        <li><Link to="/admin/users">Utilisateurs</Link></li>
-        <li><Link to="/admin/support">Support</Link></li>
-      </ul>
-    </div>
+    <aside className="w-64 h-screen bg-gray-900 text-white flex flex-col p-4">
+      <h1 className="text-xl font-bold mb-8">Admin</h1>
+      <nav className="flex flex-col gap-4">
+        <button className="flex items-center gap-2"><Home size={20}/> Dashboard</button>
+        <button className="flex items-center gap-2"><Box size={20}/> Trips</button>
+        <button className="flex items-center gap-2"><User size={20}/> Users</button>
+        <button className="flex items-center gap-2"><CreditCard size={20}/> Payments</button>
+        <button className="flex items-center gap-2"><MessageCircle size={20}/> Support</button>
+      </nav>
+    </aside>
   );
 }
